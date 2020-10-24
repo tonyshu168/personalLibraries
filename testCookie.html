@@ -1,0 +1,46 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <title>Test Cookie</title>
+    <meta charset = 'utf-8'/>
+    <meta http-equiv = 'X-UA-Compatible' content = 'IE=edge, chrome=1'/>
+    <meta name = 'viewport' width = 'device-width, initial-scale=1, maximum-scale=1, user-scalable = no'/>
+    <style>
+      section{width: 1200px; margin: 0 auto; border: 1px solid #eee;}
+      .center{display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: center; align-items: center; align-content: center;}
+      .container{}
+
+    </style>
+  </head>
+  <body>
+    <section>
+      <div class = 'container center'>
+        <h3>Dcoment Resource</h3>
+        <div class = 'searchBar'>
+          <input type = 'text' placeholder='Please input Value'/><input type='button' value='search'/>
+        </div>
+      </div>
+    </section>
+
+    <script src='js/CookieUtil.js'></script>
+    <script src='js/SubCookieUtil.js'></script>
+    <script>
+      CookieUtil.set('name', 'shuxainghui', new Date('2017-12-31') )
+      console.log( CookieUtil.get("name") )
+
+      SubCookieUtil.set( 'data', 'name', 'shuxianghui')
+      SubCookieUtil.set( 'data', 'book', 'Professional JavaScript' )
+
+      var data = SubCookieUtil.getAll( 'data' );
+      console.info(data.name)
+      console.info(data.book)
+
+      console.log(SubCookieUtil.get('data', 'name') )
+      console.log(SubCookieUtil.get('data', 'book') )
+
+      SubCookieUtil.unset( 'data', 'name' )
+      SubCookieUtil.unsetAll( 'data' )
+
+    </script>
+  </body>
+</html>
