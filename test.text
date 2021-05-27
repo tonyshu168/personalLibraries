@@ -1,1 +1,24 @@
 test file
+
+display: flex;
+
+flex-direction: row; column; row-reverse; column-reverse;
+flex-wrap: nowrap; wrap; wrap-reverse;
+flex-flow: row nowrap;
+justify-content: flex-start; flex-end; center; space-between; space-around;
+align-items: flex-start; flex-end; center; baseline; stretch;
+align-content: flext-start; flex-end; center; 
+
+HTML基础:
+
+<link rel="stylesheet" media="(max-width: 800px)" href="example.css" />
+
+<style>
+  @media (max-width: 800px) {
+
+  }
+</style>
+
+渲染引擎
+
+translate是transfrom的一个值。改变transform或opactiy不会触发浏览器reflow与repaint

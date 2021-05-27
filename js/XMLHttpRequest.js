@@ -24,7 +24,7 @@ var XMLHttp = {
         }
       }
 
-      return new ActiveXObject( arguments.class.activeXString );
+      return new ActiveXObject( arguments.callee.activeXString );
     }
     else {
       console.log( "createXHR(): No XHR object available." );

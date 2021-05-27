@@ -1,6 +1,6 @@
 {
   "data":[
-    {"messageId": "message001", "ccontent": "sakdfksaldkfsdl", "createdBy": "Tom"}
+    {"messageId": "message001", "ccontent": "sakdfksaldkfsdl", "createdBy": "Tom"},
     {"messageId": "message002", "ccontent": "sakdfsadsa", "createdBy": "Eric"},
     {"messageId": "message003", "ccontent": "sakdfksaldkfsdl", "createdBy": "Tan"},
     {"messageId": "message004", "ccontent": "sakdfksaldkfsdl", "createdBy": "Tony"},

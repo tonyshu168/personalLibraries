@@ -13,6 +13,8 @@
     <script>
       XMLHttp.get('mock/datas.json', function( data ) { 
         console.log(data)
+        data = JSON.parse(data);
+        console.log(typeof data);
       })
     </script>
   </body>
