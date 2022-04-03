@@ -1,0 +1,113 @@
+<!DOCTYPE>
+<html>
+<head>
+  <title>Street light length</title>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-compatible" content="IE=edge, chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+</head>
+<body>
+  <h3>Street light length<h3>
+
+<script>
+/*
+* 一条笔直的公路上安装了N个路灯，从位置0开始安装，路灯之间的距离是100m。每个路灯都有自己的照明半径，请计算第一个路灯和最后一个路灯之间，未照明区间的长度和。
+输入描述：
+第一行为一个数N，表示灯的个数，[1, 100000]
+第二行为N个空格分隔的数，表示路灯的照明半径，[1, 100*100000]
+输出描述：
+第一个路灯和最后一个路灯之间，未照明区间的长度和
+ */
+function getShadowLength(lightNum, lightRadium) {
+  let length = 0;
+  let index = 0;
+
+  while (index < lightNum - 1) {
+    let jump = false;
+
+    //计算 r 和 r+1 之间的阴影距离
+    if (lightRadium[index] + lightRadium[index + 1] >= 100) { //全部照明
+      index++;
+      continue;
+    }
+
+    let leftLightlen = lightRadium[index];
+    let rightLightlen = lightRadium[index + 1];
+
+    let index_l = index - 1;
+    while (index_l >= 0) {
+      if (lightRadium[index_l] <= 100) {
+        index_l--;
+        continue;
+      }
+
+      let n = lightRadium[index_l] % 100;
+      if (n >= index - index_l) {
+        if (n >= index - index_l + 1) {
+          index += n - (index - index_l); //跳出左循环循环，进入跳步循环
+          jump = true;
+          break;
+        }
+
+        let l = lightRadium[index_l] - 100 * (index - index_l);
+
+        if (l > leftLightlen) {
+          leftLightlen = l;
+        }
+      }
+    } //左循环
+    if (jump) {
+      continue;
+    }
+
+    if (leftLightlen + lightRadium[index + 1] >= 100) { //全部照明
+      index++;
+      continue;
+    }
+
+    let index_r = index + 2;
+    while (index_r < lightNum) { // r+1 后起 r+2 ->> 最后一个
+      if (lightRadium[index_r] <= 100) {
+        index_r++;
+        continue;
+      }
+
+      let n = lightRadium[index_r] % 100;
+      if (n >= index_r - (index + 1)) {
+        if (n >= index_r - (index + 1) + 1) {
+          index += 2 * n; //跳出左循环循环，进入跳步循环
+          jump = true;
+          break;
+        }
+
+        let r = lightRadium[index_r] - 100 * (index_r - (index + 1));
+        if (r > rightLightlen) {
+          rightLightlen = r;
+        }
+      }
+
+    } //右循环
+
+    if (jump) {
+      continue;
+    }
+
+
+    if (leftLightlen + rightLightlen >= 100) {
+      index++;
+      continue;
+    }
+
+    length += 100 - leftLightlen - rightLightlen;
+    index++;
+  } //主循环
+
+  return length;
+}
+
+console.log( getShadowLength(2, [50, 50]) );
+
+
+</script>
+</body>
+</html>

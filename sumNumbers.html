@@ -1,0 +1,108 @@
+<!DOCTYPE>
+<html>
+<head>
+  <title>Sum numbers</title>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-compatible" content="IE=edge, chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+</head>
+<body>
+  <h3>Sum numbers<h3>
+
+<script>
+/*
+描述
+给定一个二叉树的根节点root，该树的节点值都在数字0-9 之间，每一条从根节点到叶子节点的路径都可以用一个数字表示。
+1.该题路径定义为从树的根结点开始往下一直到叶子结点所经过的结点
+2.叶子节点是指没有子节点的节点
+3.路径只能从父节点到子节点，不能从子节点到父节点
+4.总节点数目为n
+
+例如根节点到叶子节点的一条路径是1→2→3,那么这条路径就用123 来代替。
+找出根节点到叶子节点的所有路径表示的数字之和
+例如：
+
+这颗二叉树一共有两条路径，
+根节点到叶子节点的路径 1→2 用数字12 代替
+根节点到叶子节点的路径 1→3 用数字13 代替
+所以答案为12+13=25
+
+数据范围：节点数 0≤n≤100，保证结果在32位整型范围内
+要求：空间复杂度 O(n)，时间复杂度 O(n^2)
+进阶：空间复杂度 O(n)，时间复杂度 O(n)
+ */
+
+/*
+ * function TreeNode(x) {
+ *   this.val = x;
+ *   this.left = null;
+ *   this.right = null;
+ * }
+ */
+
+/*
+非递归实现，利用手动建栈来代替函数堆栈的实现方式。 情况总共分为三种情况，
+
+父节点含有左右子节点。
+父节点只有其中一边子节点。
+父节点没有子节点。
+如果要使用DFS深度遍历优先的方式来完成，则需要关注三个重点，就是路径选择的方向与路径是否重复以及路径计算保存的问题。
+
+根据问题1路径选择方向，引入direction变量来判断方向。 根据问题2路径是否重复，选择以左边方向为默认，根据父节点拥有的子节点情况来选择方向以及是否将父节点压栈保留记录。 根据问题3路径计算保存，选择以更改子节点权值来进行保存。
+ */
+
+/**
+  * 
+  * @param root TreeNode类 
+  * @return int整型
+  */
+function sumNumbers( root ) {
+  // write code here
+  // DFS
+  let sum = 0;
+  let eachRouteVal = 0;
+  let nodeStack = [];
+  let currentNode = root;
+  let parent = null;
+  let child = null;
+  let direction = true; //true means left, false means right
+  if (!root) return 0;
+  if (!root.left && !root.right) return root.val;
+  while (currentNode || !queueIsEmpty(nodeStack)) {
+    parent = currentNode;
+    if (currentNode.left || currentNode.right) {
+      // only push parent got two children into stack,because of two path
+      if (currentNode.left && currentNode.right) {
+        if (direction) {
+          nodeStack.push(currentNode);
+        }
+        child = direction ? currentNode.left : currentNode.right;
+      } else{
+        direction = currentNode.left ? true : false;
+        child = direction ? currentNode.left : currentNode.right;
+      }
+      eachRouteVal = calculateRouteValue(parent, child);
+      child.val = eachRouteVal;
+      currentNode = child;
+      direction = true; //start from left route by default
+    } else {
+      // solve the right path
+      currentNode = nodeStack.pop();
+      sum += eachRouteVal;
+      eachRouteVal = 0;
+      direction = false;
+    }
+  }
+  return sum;
+}
+
+const queueIsEmpty = (queue) =>{
+    return queue.length === 0;
+}
+const calculateRouteValue = (parent,child) => {
+    return parseInt([String(parent.val),String(child.val)].join(''));
+}
+
+</script>
+</body>
+</html>

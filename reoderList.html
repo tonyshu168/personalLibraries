@@ -1,0 +1,118 @@
+<!DOCTYPE>
+<html>
+<head>
+  <title>reorder list</title>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-compatible" content="IE=edge, chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+</head>
+<body>
+  <h3>reorder list<h3>
+
+<script>
+/*
+描述
+将给定的单链表L： L0→L1→…→L{n-1}→L_n
+
+​
+ 
+重新排序为：L0→Ln →L1→L{n-1}→L_2→L{n-2}→…
+​
+要求使用原地算法，不能只改变节点内部的值，需要对实际的节点进行交换。
+
+数据范围：链表长度 0 ≤ n ≤ 20000 ，链表中每个节点的值满足0 ≤ val ≤ 1000
+
+要求：空间复杂度 O(n)并在链表上进行操作而不新建链表，时间复杂度 O(n)
+进阶：空间复杂度 O(1)， 时间复杂度 O(n)
+
+示例1
+输入：{1,2,3,4}
+
+返回值：{1,4,2,3}
+
+说明：给定head链表1->2->3->4,重新排列为1->4->2->3,会取head链表里面的值打印输出1      
+示例2
+输入：{1,2,3,4,5}
+
+返回值：{1,5,2,4,3}
+
+说明：给定head链表1->2->3->4->5,重新排列为1->5>2->4->3,会取head链表里面的值打印输出 
+
+示例3
+输入：{}
+
+返回值：{}
+ */
+
+/*
+ * function ListNode(x){
+ *   this.val = x;
+ *   this.next = null;
+ * }
+ */
+
+/*
+* 先遍历一遍链表，放在数组 stack中，得到链表长度len
+* 指针q用来遍历链表，next用来存q的下一位
+* newHead作为新的头，rear表示链表的尾部，使用尾插法
+* cnt表示q走到了哪里，走到链表的一半就可以停下
+* 当 top 和 q 相等时 ，表明链表有奇数个节点并且当前是中点的位置，此时只插入一个节点即可
+* 一般情况先插入q再插入top
+* q指向它自己的next，cnt + 1
+* 最后返回newHead
+*/
+
+/**
+ * 
+ * @param head ListNode类 
+ * @return void
+ */
+function reorderList(head) {
+  if (!head || !head.next) return head
+  let stack = []
+  let p = head
+  let len = 0
+  while (p != null) {
+    stack.push(p)
+    p = p.next
+    len++
+  }
+  let q = head
+  let next = null
+  let cnt = 1
+  let newHead = null
+  let rear = null
+  while (q != null && cnt <= Math.ceil(len / 2)) {
+    let top = stack.pop()
+    console.log(q.val, top.val)
+    if (top == q) {
+      if (newHead == null) {
+        newHead = top
+        rear = top
+      } else {
+        rear.next = top
+        rear = top
+      }
+    } else {
+      if (newHead == null) {
+        newHead = q
+        next = q.next
+        q.next = top
+        rear = top
+      } else {
+        rear.next = q
+        next = q.next
+        q.next = top
+        rear = top
+      }
+    }
+    q = next
+    cnt++
+  }
+  rear.next = null
+  return newHead
+}
+
+</script>
+</body>
+</html>

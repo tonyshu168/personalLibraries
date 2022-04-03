@@ -1,0 +1,75 @@
+<!DOCTYPE>
+<html>
+<head>
+  <title>NC1 大数加法</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no"/>
+</head>
+<body>
+  <h3>NC1 大数加法</h3>
+
+<script>
+  /*
+  描述
+  以字符串的形式读入两个数字，编写一个函数计算它们的和，以字符串形式返回。
+
+  数据范围：len(s),len(t) \le 100000len(s),len(t)≤100000，字符串仅由'0'~‘9’构成
+  要求：时间复杂度 O(n)O(n)
+  示例1
+  输入：
+  "1","99"
+ 
+  返回值：
+  "100"
+  
+  说明：
+  1+99=100      
+  示例2
+  输入：
+  "114514",""
+  
+  返回值：
+  "114514"
+   */
+  
+  /**
+   * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+   * 计算两个数之和
+   * @param s string字符串 表示第一个整数
+   * @param t string字符串 表示第二个整数
+   * @return string字符串
+   */
+  function bigNumberAddition(first, second) {
+    let maxLength = Math.max(first.length, second.length);
+
+    //用0去补齐长度
+    first = first.padStart(maxLength , 0);    //"0009007199254740991"
+    second = second.padStart(maxLength , 0);  //"1234567899999999999"
+
+    //定义加法过程中需要用到的变量
+    let t = 0;
+    let f = 0;   //"进位"
+    let sum = "";
+
+    for (let i = maxLength-1; i >= 0 ; i--) {
+      t = parseInt(first[i], 10) + parseInt(second[i], 10) + f;
+      f = Math.floor( t/10 );
+      sum = t % 10 + sum;
+    }
+    if(f == 1){
+      sum = "1" + sum;
+    }
+    return sum;
+  }
+
+  const s1 = '9', s2 = '99999999999999999999999999999999999999999999999999999999999994';
+  // 预期结果100000000000000000000000000000000000000000000000000000000000003
+  
+  const result = bigNumberAddition(s1, s2);
+
+  console.log('result: ', result);
+
+</script>
+</body>
+</html>
